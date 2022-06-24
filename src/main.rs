@@ -18,7 +18,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 Some(m) => {
                     let s = m.size();
                     str = format!("{}x{}", s.width, s.height);
-                },
+                }
                 None => {
                     str = String::from("1920x1080");
                 }
@@ -93,9 +93,23 @@ impl Application for ActivateWindows {
     fn view(&mut self) -> Element<Self::Message> {
         let color = Color::new(1.0, 1.0, 1.0, 0.4);
 
+
+        let top = "激活 Windows";
+        #[cfg(target_os = "linux")]
+            let top = "激活 Linux";
+        #[cfg(target_os = "macos")]
+            let top = "激活 MacOS";
+
+
+        let bottom = "转到“设置”以激活 Windows。";
+        #[cfg(target_os = "linux")]
+            let bottom = "转到“设置”以激活 Linux。";
+        #[cfg(target_os = "macos")]
+            let bottom = "转到“偏好设置”以激活 MacOS。";
+
         Column::new()
-            .push(Text::new("激活 Windows").color(color))
-            .push(Text::new("转到“设置”以激活 Windows。").color(color))
+            .push(Text::new(top).color(color))
+            .push(Text::new(bottom).color(color))
             .into()
     }
 
