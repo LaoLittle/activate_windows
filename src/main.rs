@@ -93,23 +93,21 @@ impl Application for ActivateWindows {
     fn view(&mut self) -> Element<Self::Message> {
         let color = Color::new(1.0, 1.0, 1.0, 0.4);
 
-
-        let top = "激活 Windows";
+        let _top = "激活 Windows";
         #[cfg(target_os = "linux")]
-            let top = "激活 Linux";
+            let _top = "激活 Linux";
         #[cfg(target_os = "macos")]
-            let top = "激活 MacOS";
+            let _top = "激活 MacOS";
 
-
-        let bottom = "转到“设置”以激活 Windows。";
+        let _bottom = "转到“设置”以激活 Windows。";
         #[cfg(target_os = "linux")]
-            let bottom = "转到“设置”以激活 Linux。";
+            let _bottom = "转到“设置”以激活 Linux。";
         #[cfg(target_os = "macos")]
-            let bottom = "转到“偏好设置”以激活 MacOS。";
+            let _bottom = "转到“偏好设置”以激活 MacOS。";
 
         Column::new()
-            .push(Text::new(top).color(color))
-            .push(Text::new(bottom).color(color))
+            .push(Text::new(_top).color(color))
+            .push(Text::new(_bottom).color(color))
             .into()
     }
 
