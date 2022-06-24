@@ -1,33 +1,29 @@
+use std::env;
 use std::error::Error;
 
-use std::fs::File;
-use std::io::{Read, Write};
-use std::path::Path;
 use iced::{Application, Color, Column, Command, Element, Settings, Text, window};
-use iced::window::{Position};
+use iced::window::Position;
 
 static FONT: &[u8] = include_bytes!("../MiSans-Regular.ttf");
 
 fn main() -> Result<(), Box<dyn Error>> {
-    // todo: 优化屏幕尺寸获取方式
-    let path = Path::new("size");
-    if !path.is_file() {
-        let mut f = File::create(path)?;
-        let lp = winit::event_loop::EventLoop::new();
+    {
+        let env: Vec<String> = env::args().collect();
+        let get_size = String::from("get_size");
 
-        let size = lp.primary_monitor().unwrap().size();
-        let str = format!("{}x{}", size.width, size.height);
+        if env.contains(&get_size) {
+            let lp = winit::event_loop::EventLoop::new();
 
-        f.write_all(str.as_bytes())?;
-
-        println!("成功获取屏幕尺寸，请再次打开本程序！");
-
-        return Ok(())
+            let size = lp.primary_monitor().unwrap().size();
+            print!("{}x{}", size.width, size.height); // can ignore trim()
+            return Ok(());
+        }
     }
 
-    let mut f = File::open(path)?;
-    let mut string = String::new();
-    f.read_to_string(&mut string)?;
+    let out = std::process::Command::new(env::current_exe()?)
+        .args(&["get_size"]).output()?;
+
+    let string = String::from_utf8(out.stdout)?;
 
     let sli: Vec<&str> = string.split('x').collect();
 
@@ -48,7 +44,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 decorations: false,
                 transparent: true,
                 always_on_top: true,
-                icon: None
+                icon: None,
             },
             flags: (),
             default_font: Some(FONT),
@@ -56,7 +52,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             text_multithreading: false,
             antialiasing: true,
             exit_on_close_request: false,
-            try_opengles_first: false
+            try_opengles_first: false,
         }
     )?;
 
@@ -86,7 +82,7 @@ impl Application for ActivateWindows {
     }
 
     fn view(&mut self) -> Element<Self::Message> {
-        let color = Color::new(1.0,1.0,1.0,0.4);
+        let color = Color::new(1.0, 1.0, 1.0, 0.4);
 
         Column::new()
             .push(Text::new("激活 Windows").color(color))
