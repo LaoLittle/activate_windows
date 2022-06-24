@@ -13,9 +13,18 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         if env.contains(&get_size) {
             let lp = winit::event_loop::EventLoop::new();
+            let str: String;
+            match lp.primary_monitor() {
+                Some(m) => {
+                    let s = m.size();
+                    str = format!("{}x{}", s.width, s.height);
+                },
+                None => {
+                    str = String::from("1920x1080");
+                }
+            }
 
-            let size = lp.primary_monitor().unwrap().size();
-            print!("{}x{}", size.width, size.height); // can ignore trim()
+            print!("{str}"); // can ignore trim()
             return Ok(());
         }
     }
@@ -51,7 +60,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             default_text_size: font_size as u16,
             text_multithreading: false,
             antialiasing: true,
-            exit_on_close_request: false,
+            exit_on_close_request: true,
             try_opengles_first: false,
         }
     )?;
