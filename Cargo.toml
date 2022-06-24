@@ -1,0 +1,22 @@
+[package]
+name = "activate_windows"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+#wallpaper = "3"
+#image = "0"
+winit = "0"
+
+[dependencies.iced]
+version = "0"
+features = ["wgpu", "glow"]
+
+[profile.release]
+lto = "thin"
+opt-level = 3
+incremental = false
+strip = true
+codegen-units = 1
