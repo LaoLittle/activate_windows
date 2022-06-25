@@ -31,4 +31,16 @@ mod test {
 
 
     }
+
+    #[test]
+    fn font_linux() {
+        let mut s = SystemSource::new()
+            .select_family_by_name("Noto Sans CJK SC").unwrap()
+            .fonts()
+            .first()
+            .unwrap()
+            .load().unwrap();
+
+        println!("{:?}", s.properties());
+    }
 }

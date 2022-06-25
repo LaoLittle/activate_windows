@@ -50,6 +50,9 @@ fn main() -> Result<(), Box<dyn Error>> {
         #[cfg(target_os = "macos")]
             let f = f.select_family_by_name("PingFang SC")?;
 
+        #[cfg(target_os = "linux")]
+            let f = f.select_family_by_name("Noto Sans CJK SC")?;
+
         let f = f.fonts().first().unwrap()
         .load()?.copy_font_data().unwrap();
 
