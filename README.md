@@ -12,4 +12,4 @@
 
 Wants to activate your Android devices? Go to [wyapx/activate_android](https://github.com/wyapx/activate_android)
 
-Androidデバイスのアクティブにしますか？入手：[wyapx/activate_android](https://github.com/wyapx/activate_android)
+Androidデバイスをアクティブにしますか？入手：[wyapx/activate_android](https://github.com/wyapx/activate_android)
