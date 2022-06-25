@@ -4,6 +4,8 @@ use std::error::Error;
 use iced::{Application, Color, Column, Command, Element, Settings, Text, window};
 use iced::window::Position;
 
+use activate_windows::get_display_size;
+
 static FONT: &[u8] = include_bytes!("../MiSans-Regular.ttf");
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -12,19 +14,9 @@ fn main() -> Result<(), Box<dyn Error>> {
         let get_size = String::from("get_size");
 
         if env.contains(&get_size) {
-            let lp = winit::event_loop::EventLoop::new();
-            let str: String;
-            match lp.primary_monitor() {
-                Some(m) => {
-                    let s = m.size();
-                    str = format!("{}x{}", s.width, s.height);
-                }
-                None => {
-                    str = String::from("1920x1080");
-                }
-            }
+            let (w, h) = get_display_size();
 
-            print!("{str}"); // can ignore trim()
+            print!("{}x{}", w, h); // can ignore trim()
             return Ok(());
         }
     }
@@ -39,14 +31,16 @@ fn main() -> Result<(), Box<dyn Error>> {
     let width: u32 = sli[0].parse()?;
     let height: u32 = sli[1].parse()?;
 
-    let font_size = width.min(height) >> 6;
+    let font_size = width.min(height) >> 4;
+
+    println!("{:?}", (width, height));
 
     ActivateWindows::run(
         Settings {
             id: None,
             window: window::Settings {
-                size: (width >> 3, font_size << 1),
-                position: Position::Specific(width as i32 / 3, (height as f32 / 2.5) as _),
+                size: (width >> 2, font_size),
+                position: Position::Specific(((width * 3) >> 2) as _, ((height * 3) >> 2) as _),
                 min_size: None,
                 max_size: None,
                 resizable: false,
@@ -57,7 +51,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             },
             flags: (),
             default_font: Some(FONT),
-            default_text_size: font_size as u16,
+            default_text_size: (font_size >> 1) as u16,
             text_multithreading: false,
             antialiasing: true,
             exit_on_close_request: true,

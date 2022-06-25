@@ -8,6 +8,9 @@ edition = "2021"
 [dependencies]
 winit = "0"
 
+[target."cfg(target_os = \"macos\")".dependencies.core-graphics]
+version = "0.22"
+
 [dependencies.iced]
 version = "0"
 features = ["wgpu", "glow"]
