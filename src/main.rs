@@ -2,7 +2,7 @@ use std::env;
 use std::error::Error;
 use font_kit::source::SystemSource;
 
-use iced::{Application, Color, Column, Command, Element, Font, Settings, Text, window};
+use iced::{Application, Color, Column, Command, Element, Settings, Text, window};
 use iced::window::Position;
 
 use activate_windows::get_display_size;
@@ -62,7 +62,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         Settings {
             id: None,
             window: window::Settings {
-                size: ((font_size << 4) / 3, font_size),
+                size: ((font_size * 6), font_size),
                 position: Position::Specific(((width * 3) >> 2) as _, ((height * 3) >> 2) as _),
                 min_size: None,
                 max_size: None,
