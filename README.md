@@ -6,3 +6,6 @@
 
 ## 自主构建
 `clone`本项目，进入目录执行`cargo b`即可
+
+## 其他
+激活您的Android设备？看看[wyapx/activate_android](https://github.com/wyapx/activate_android)
